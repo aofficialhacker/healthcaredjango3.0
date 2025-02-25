@@ -1,0 +1,156 @@
+{% extends "healthcare_app/base.html" %}
+{% block title %}Our Doctors{% endblock %}
+
+{% block content %}
+<div class="sticky-top bg-white py-3 shadow-sm" style="top: 72px; z-index: 1020;">
+  <div class="container">
+    <h2 class="h3 mb-4">Our Doctors</h2>
+    <!-- Real-time Search Box -->
+    <div class="mb-3 position-relative">
+      <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
+      <input type="text" id="doctorSearch" class="form-control form-control-lg ps-5" placeholder="Search doctors by name or specialty...">
+    </div>
+    <!-- Genre Filter Pills in scrollable container -->
+    <div class="specialty-filter-container overflow-auto mb-0 pb-2">
+      <ul class="nav nav-pills flex-nowrap mb-0" style="white-space: nowrap;">
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if not genre or genre|lower == 'all' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=all">All</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'neurologist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=neurologist">Neurologist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'general_physician' or genre|lower == 'general physician' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=general_physician">General Physician</a>
+        </li>    
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'gynecologist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=gynecologist">Gynecologist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'cardiologist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=cardiologist">Cardiologist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'dentist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=dentist">Dentist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'dietician' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=dietician">Dietician</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'orthopedist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=orthopedist">Orthopedist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'dermatologist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=dermatologist">Dermatologist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'psychiatrist' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=psychiatrist">Psychiatrist</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'pediatrician' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=pediatrician">Pediatrician</a>
+        </li>
+        <li class="nav-item me-2">
+          <a class="nav-link rounded-pill {% if genre|lower == 'ent' %}active{% endif %}" href="{% url 'doctor_list' %}?genre=ent">ENT</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <div class="row g-4" id="doctorListContainer">
+    {% for entry in doctor_list %}
+      {% with doctor=entry.doctor rating=entry.rating star_rating=entry.star_rating %}
+        <div class="col-md-6 col-lg-4 doctor-card">
+          <div class="card h-100 border-0 shadow-sm hover-shadow transition">
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h5 class="card-title h4 mb-1 doctor-name">
+                    {% if doctor.user.first_name %}
+                      Dr. {{ doctor.user.first_name }}
+                    {% else %}
+                      {{ doctor.user.username }}
+                    {% endif %}
+                  </h5>
+                  <h6 class="card-subtitle text-primary mb-0 doctor-specialty">{{ doctor.specialty }}</h6>
+                </div>
+                <div class="text-end">
+                  <div class="d-flex align-items-center mb-1">
+                    <span class="h5 mb-0 me-2">{{ rating }}</span>
+                    <div class="text-warning">
+                      {% for i in "12345" %}
+                        {% if forloop.counter <= star_rating %}
+                          <i class="bi bi-star-fill"></i>
+                        {% else %}
+                          <i class="bi bi-star"></i>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <small class="text-muted">Rating</small>
+                </div>
+              </div>
+              
+              {% if doctor.checkup_fee %}
+                <p class="card-text mb-3">
+                  <span class="badge bg-light text-dark p-2">
+                    <i class="bi bi-currency-rupee"></i> {{ doctor.checkup_fee }} Consultation Fee
+                  </span>
+                </p>
+              {% else %}
+                <p class="card-text mb-3">
+                  <span class="badge bg-light text-dark p-2">
+                    <i class="bi bi-telephone"></i> Call for fee details
+                  </span>
+                </p>
+              {% endif %}
+              
+              <p class="card-text text-muted mb-4">{{ doctor.bio|truncatewords:20 }}</p>
+              
+              <a href="{% url 'book_appointment' %}?doctor={{ doctor.id }}" class="btn btn-primary w-100">
+                <i class="bi bi-calendar-plus me-2"></i>Book Appointment
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endwith %}
+    {% empty %}
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-search display-1 text-muted mb-3"></i>
+        <p class="h4 text-muted">No doctors found matching your criteria.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.specialty-filter-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.specialty-filter-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.specialty-filter-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.specialty-filter-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.hover-shadow {
+  transition: all 0.3s ease;
+}
+
+.hover-shadow:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+</style>
+{% endblock %}

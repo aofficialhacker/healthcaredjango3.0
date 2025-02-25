@@ -1,0 +1,165 @@
+[
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 1,
+      "fields": {
+        "name": "Complete Blood Count (CBC)",
+        "price": "300.00",
+        "description": "Evaluates overall health and detects a wide range of disorders."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 2,
+      "fields": {
+        "name": "Lipid Profile",
+        "price": "500.00",
+        "description": "Measures cholesterol and triglycerides to assess heart health."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 3,
+      "fields": {
+        "name": "Thyroid Function Test",
+        "price": "800.00",
+        "description": "Assesses thyroid activity by measuring T3, T4, and TSH levels."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 4,
+      "fields": {
+        "name": "Liver Function Test (LFT)",
+        "price": "700.00",
+        "description": "Evaluates liver enzymes, proteins, and bilirubin levels to check liver health."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 5,
+      "fields": {
+        "name": "Kidney Function Test (KFT)",
+        "price": "600.00",
+        "description": "Assesses kidney function by measuring creatinine and urea levels."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 6,
+      "fields": {
+        "name": "Blood Glucose Test",
+        "price": "250.00",
+        "description": "Measures blood sugar levels to screen for diabetes."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 7,
+      "fields": {
+        "name": "Urine Analysis (Routine)",
+        "price": "200.00",
+        "description": "Evaluates urine for infections, kidney function, and other abnormalities."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 8,
+      "fields": {
+        "name": "Electrolyte Panel",
+        "price": "400.00",
+        "description": "Checks sodium, potassium, chloride, and other essential electrolytes."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 9,
+      "fields": {
+        "name": "Vitamin D Test",
+        "price": "1200.00",
+        "description": "Measures serum vitamin D levels to evaluate bone health."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 10,
+      "fields": {
+        "name": "C-Reactive Protein (CRP) Test",
+        "price": "500.00",
+        "description": "Detects inflammation in the body by measuring CRP levels."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 11,
+      "fields": {
+        "name": "HbA1c Test",
+        "price": "400.00",
+        "description": "Measures average blood sugar levels over the past 2-3 months."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 12,
+      "fields": {
+        "name": "Iron Studies",
+        "price": "600.00",
+        "description": "Assesses iron, ferritin, and transferrin levels to evaluate anemia."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 13,
+      "fields": {
+        "name": "Rheumatoid Factor (RF) Test",
+        "price": "350.00",
+        "description": "Helps in diagnosing rheumatoid arthritis by detecting rheumatoid factor."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 14,
+      "fields": {
+        "name": "Prothrombin Time (PT/INR) Test",
+        "price": "450.00",
+        "description": "Evaluates blood clotting by measuring prothrombin time and INR."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 15,
+      "fields": {
+        "name": "Serum Calcium Test",
+        "price": "350.00",
+        "description": "Measures calcium levels to assess bone and kidney function."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 16,
+      "fields": {
+        "name": "Serum Uric Acid Test",
+        "price": "300.00",
+        "description": "Determines uric acid levels to help diagnose gout and kidney issues."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 17,
+      "fields": {
+        "name": "Fasting Insulin Test",
+        "price": "700.00",
+        "description": "Assesses insulin levels for evaluating metabolic function."
+      }
+    },
+    {
+      "model": "healthcare_app.labtest",
+      "pk": 18,
+      "fields": {
+        "name": "Lipoprotein(a) Test",
+        "price": "1500.00",
+        "description": "Measures lipoprotein(a) levels associated with heart disease risk."
+      }
+    }
+  ]
+  

@@ -1,0 +1,64 @@
+/* Hero Section Styling */
+.hero-section {
+    background: url('https://img.freepik.com/free-photo/medical-equipment-with-copy-space_23-2148519736.jpg?semt=ais_hybrid') center center/cover no-repeat;
+    height: 80vh;
+    position: relative;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+  }
+  
+  /* Section Titles */
+  h2 {
+    font-weight: 700;
+  }
+  
+  /* Testimonials Styling */
+  .testimonial {
+    padding: 2rem;
+  }
+  
+  /* General Adjustments */
+  .card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .btn-primary {
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+  }
+  
+  .position-relative {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 38px; /* Position relative to input field, not the entire container */
+    cursor: pointer;
+    z-index: 2;
+  }
+  
+  .toggle-password i {
+    font-size: 1.2rem;         /* Adjust icon size if you want */
+  }
+  

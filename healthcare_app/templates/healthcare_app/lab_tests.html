@@ -1,0 +1,89 @@
+{% extends "healthcare_app/base.html" %}
+{% block title %}Lab Tests{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h2 class="display-5 text-center mb-5">Available Lab Tests</h2>
+  
+  <!-- Enhanced Search Box -->
+  <div class="row mb-4">
+    <div class="col-lg-6 mx-auto">
+      <div class="input-group">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search text-muted"></i>
+        </span>
+        <input type="text" id="labTestSearch" class="form-control border-start-0" placeholder="Search lab tests...">
+      </div>
+    </div>
+  </div>
+  
+  <div class="row g-4" id="labTestsContainer">
+    {% for test in tests %}
+      <div class="col-md-4 lab-test-card">
+        <div class="card h-100 border-0 shadow-sm hover-lift">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center mb-3">
+              <i class="bi bi-clipboard2-pulse text-primary h4 mb-0 me-2"></i>
+              <h5 class="card-title h4 mb-0">{{ test.name }}</h5>
+            </div>
+            <p class="card-text text-muted mb-4">{{ test.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <p class="h5 text-success mb-0">₹{{ test.price }}</p>
+              <a href="{% url 'book_lab_test' test.id %}" class="btn btn-primary">Schedule & Book</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+#labTestSearch:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
+.lab-test-card {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.lab-test-card.hidden {
+  opacity: 0;
+}
+</style>
+
+<script>
+document.getElementById('labTestSearch').addEventListener('keyup', function() {
+    var searchTerm = this.value.toLowerCase();
+    var labTestCards = document.querySelectorAll('.lab-test-card');
+    
+    labTestCards.forEach(function(card) {
+        var testName = card.querySelector('.card-title').textContent.toLowerCase();
+        var description = card.querySelector('.card-text').textContent.toLowerCase();
+        
+        if (testName.includes(searchTerm) || description.includes(searchTerm)) {
+            card.classList.remove('hidden');
+            card.style.display = 'block';
+        } else {
+            card.classList.add('hidden');
+            setTimeout(() => {
+                if (card.classList.contains('hidden')) {
+                    card.style.display = 'none';
+                }
+            }, 300);
+        }
+    });
+});
+</script>
+{% endblock %}

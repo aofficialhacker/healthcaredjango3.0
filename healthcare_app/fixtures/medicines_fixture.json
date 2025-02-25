@@ -1,0 +1,75 @@
+[
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 1,
+      "fields": {
+        "name": "Paracetamol",
+        "description": "Used for pain relief and fever reduction.",
+        "price": "50.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 2,
+      "fields": {
+        "name": "Ibuprofen",
+        "description": "Nonsteroidal anti-inflammatory drug (NSAID) for pain and inflammation.",
+        "price": "75.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 3,
+      "fields": {
+        "name": "Amoxicillin",
+        "description": "Antibiotic used to treat a variety of bacterial infections.",
+        "price": "120.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 4,
+      "fields": {
+        "name": "Cetirizine",
+        "description": "Antihistamine for allergy relief.",
+        "price": "40.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 5,
+      "fields": {
+        "name": "Metformin",
+        "description": "Used to control blood sugar levels in type 2 diabetes.",
+        "price": "100.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 6,
+      "fields": {
+        "name": "Omeprazole",
+        "description": "Proton pump inhibitor used to reduce stomach acid.",
+        "price": "150.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 7,
+      "fields": {
+        "name": "Amlodipine",
+        "description": "Used to treat high blood pressure and chest pain.",
+        "price": "90.00"
+      }
+    },
+    {
+      "model": "healthcare_app.medicine",
+      "pk": 8,
+      "fields": {
+        "name": "Azithromycin",
+        "description": "Antibiotic used for various bacterial infections.",
+        "price": "200.00"
+      }
+    }
+  ]
+  

@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}bHealthy - Healthcare Platform{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Bootstrap CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'healthcare_app/css/style.css' %}">
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #333;
+      background-color: #f5f8fa;
+    }
+    
+    /* Navbar styles */
+    .navbar {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 0.8rem 0;
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .navbar-brand i {
+      margin-right: 0.5rem;
+      color: #fff;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      padding: 0.5rem 1rem !important;
+      transition: all 0.3s;
+      border-radius: 4px;
+    }
+    
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn-outline-light {
+      border-width: 2px;
+    }
+    
+    /* Card styles */
+    .card {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .card-header {
+      background-color: #fff;
+      border-bottom: 1px solid #eee;
+    }
+    
+    /* Button styles */
+    .btn {
+      border-radius: 5px;
+      padding: 0.5rem 1.25rem;
+      font-weight: 500;
+    }
+    
+    .btn-primary {
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+    }
+    
+    .btn-primary:hover {
+      background-color: #0b5ed7;
+      border-color: #0a58ca;
+    }
+    
+    /* Footer styles */
+    footer {
+      color: white;
+      padding: 2rem 0;
+    }
+    
+    .footer-link {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+    }
+    
+    .footer-link:hover {
+      color: white;
+    }
+    
+    /* User avatar */
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .navbar-brand {
+        font-size: 1.2rem;
+      }
+      
+      .navbar-toggler {
+        border: none;
+        padding: 0.25rem;
+      }
+      
+      .nav-item {
+        margin-bottom: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <i class="bi bi-heart-pulse-fill"></i>bHealthy
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">
+              <i class="bi bi-house me-1"></i> Home
+            </a>
+          </li>
+          
+          {% if user.is_authenticated %}
+            {% if user.doctorprofile %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctor_dashboard' %}">
+                  <i class="bi bi-speedometer2 me-1"></i> Dashboard
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="doctorDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-clipboard2-pulse me-1"></i> Management
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="doctorDropdown">
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-calendar-check me-2"></i>Appointments</a></li>
+                  <li><a class="dropdown-item" href="#"><i class="bi bi-journal-medical me-2"></i>Medical Records</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'doctor_list' %}">
+                  <i class="bi bi-person-badge me-1"></i> Find Doctors
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'book_appointment' %}">
+                  <i class="bi bi-calendar-plus me-1"></i> Book Appointment
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'appointment_list' %}">
+                  <i class="bi bi-calendar-check me-1"></i> My Appointments
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'patient_list' %}">
+                  <i class="bi bi-people me-1"></i> My Patients
+                </a>
+              </li>
+            {% endif %}
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="user-avatar">
+                  {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+                </div>
+                <span class="d-none d-md-inline">{{ user.first_name }}</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2"></i>My Profile</a></li>
+                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item text-danger">
+                      <i class="bi bi-box-arrow-right me-2"></i>Logout
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+            
+          {% else %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="patientDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person me-1"></i> Patients
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="patientDropdown">
+                <li><a class="dropdown-item" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'register' %}"><i class="bi bi-person-plus me-2"></i>Register</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="doctorAccDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-person-badge me-1"></i> Doctors
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="doctorAccDropdown">
+                <li><a class="dropdown-item" href="{% url 'doctor_login' %}"><i class="bi bi-box-arrow-in-right me-2"></i>Login</a></li>
+                <li><a class="dropdown-item" href="{% url 'doctor_register' %}"><i class="bi bi-person-plus me-2"></i>Register</a></li>
+              </ul>
+            </li>
+            
+            <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+              <a class="btn btn-outline-light btn-sm" href="{% url 'doctor_list' %}">
+                <i class="bi bi-search me-1"></i> Find a Doctor
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="bg-dark">
+    <div class="container">
+      <div class="row py-4">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h5 class="text-white mb-3"><i class="bi bi-heart-pulse-fill me-2"></i>bHealthy</h5>
+          <p class="text-white-50">Providing quality healthcare services and connecting patients with the right medical professionals since 2023.</p>
+          <div class="mt-3">
+            <a href="#" class="me-2 text-white"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="me-2 text-white"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="me-2 text-white"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="me-2 text-white"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-md-2 mb-4 mb-md-0">
+          <h6 class="text-white mb-3">Quick Links</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="{% url 'home' %}" class="footer-link">Home</a></li>
+            <li class="mb-2"><a href="#" class="footer-link">About Us</a></li>
+            <li class="mb-2"><a href="#" class="footer-link">Services</a></li>
+            <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3 mb-4 mb-md-0">
+          <h6 class="text-white mb-3">For Patients</h6>
+          <ul class="list-unstyled">
+            <li class="mb-2"><a href="{% url 'doctor_list' %}" class="footer-link">Find a Doctor</a></li>
+            <li class="mb-2"><a href="{% url 'book_appointment' %}" class="footer-link">Book Appointment</a></li>
+            <li class="mb-2"><a href="#" class="footer-link">Medical Records</a></li>
+            <li class="mb-2"><a href="#" class="footer-link">Patient Portal</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 class="text-white mb-3">Contact Us</h6>
+          <address class="text-white-50 mb-0">
+            <p class="mb-1"><i class="bi bi-geo-alt me-2"></i>123 Healthcare Ave, Medical City</p>
+            <p class="mb-1"><i class="bi bi-telephone me-2"></i>(123) 456-7890</p>
+            <p class="mb-1"><i class="bi bi-envelope me-2"></i>info@bhealthy.com</p>
+          </address>
+        </div>
+      </div>
+      <div class="row border-top border-secondary pt-4 pb-2">
+        <div class="col-md-6 text-center text-md-start text-white-50">
+          <small>&copy; 2025 bHealthy. All rights reserved.</small>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <small class="text-white-50">
+            <a href="#" class="footer-link me-3">Privacy Policy</a>
+            <a href="#" class="footer-link me-3">Terms of Service</a>
+            <a href="#" class="footer-link">Accessibility</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'healthcare_app/js/script.js' %}"></script>
+</body>
+</html>

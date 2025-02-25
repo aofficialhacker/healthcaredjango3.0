@@ -1,0 +1,85 @@
+{% extends "healthcare_app/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Doctor Login{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow-lg border-0 animate__animated animate__fadeIn">
+        <div class="card-header bg-success text-white text-center py-4">
+          <i class="bi bi-hospital display-4 mb-2"></i>
+          <h2 class="mb-0" style="font-size: 1.75rem;">Doctor Login</h2>
+          <p class="text-white-50 mb-0">Access your healthcare dashboard</p>
+        </div>
+        <div class="card-body p-4">
+          {% if form.errors %}
+            <div class="alert alert-danger animate__animated animate__shakeX">
+              <ul class="mb-0">
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          <form method="post" novalidate class="needs-validation">
+            {% csrf_token %}
+            {% for field in form %}
+              {% if field.name == "password" %}
+                <div class="mb-4">
+                  <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+                  <div class="position-relative">
+                    {% render_field field class="form-control form-control-lg shadow-sm" placeholder="Enter your password" %}
+                    <span class="position-absolute top-50 end-0 translate-middle-y pe-3 toggle-password" style="cursor: pointer;">
+                      <i class="bi bi-eye text-success"></i>
+                    </span>
+                  </div>
+                  {% for error in field.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="mb-4">
+                  <label for="{{ field.id_for_label }}" class="form-label fw-bold">{{ field.label }}</label>
+                  {% render_field field class="form-control form-control-lg shadow-sm" %}
+                  {% for error in field.errors %}
+                    <div class="text-danger small mt-1">{{ error }}</div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+            <div class="d-grid gap-2 mt-4">
+              <button type="submit" class="btn btn-success btn-lg shadow-sm hover-lift">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Login
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center bg-white py-3">
+          <p class="mb-0">
+            Don't have an account?
+            <a href="{% url 'doctor_register' %}" class="text-success fw-bold text-decoration-none">Register here</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.hover-lift {
+  transition: transform 0.2s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+.animate__animated {
+  animation-duration: 0.5s;
+}
+</style>
+{% endblock %}

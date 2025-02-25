@@ -1,0 +1,98 @@
+{% extends "healthcare_app/base.html" %}
+{% block title %}Book Lab Test{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="card shadow-sm border-0">
+    <div class="card-body p-4">
+      <div class="row">
+        <!-- Test Details Section -->
+        <div class="col-md-6 mb-4 mb-md-0">
+          <h2 class="mb-4 text-primary"><i class="bi bi-clipboard2-pulse me-2"></i>{{ test.name }}</h2>
+          {% if error %}
+            <div class="alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+            </div>
+          {% endif %}
+          <div class="test-details">
+            <div class="mb-3">
+              <i class="bi bi-info-circle text-muted me-2"></i>
+              <p class="d-inline">{{ test.description }}</p>
+            </div>
+            <div class="price-tag p-3 bg-light rounded">
+              <i class="bi bi-tag-fill text-success me-2"></i>
+              <span class="h5 mb-0">₹{{ test.price }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- Booking Form Section -->
+        <div class="col-md-6">
+          <div class="booking-form">
+            <h4 class="mb-4">Schedule Your Test</h4>
+            <form method="post" action="" class="needs-validation" novalidate>
+              {% csrf_token %}
+              <div class="mb-4">
+                <label for="schedule_date" class="form-label">
+                  <i class="bi bi-calendar-event me-2"></i>Select Date & Time
+                </label>
+                <input type="datetime-local" 
+                       id="schedule_date" 
+                       name="schedule_date" 
+                       class="form-control form-control-lg" 
+                       required>
+                <div class="invalid-feedback">
+                  Please select a valid date and time.
+                </div>
+              </div>
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success btn-lg">
+                  <i class="bi bi-check-circle me-2"></i>Confirm Booking
+                </button>
+                <a href="{% url 'lab_tests' %}" class="btn btn-outline-secondary">
+                  <i class="bi bi-arrow-left me-2"></i>Back to Lab Tests
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.test-details {
+  animation: fadeIn 0.5s ease-in;
+}
+
+.price-tag {
+  transition: transform 0.2s;
+}
+
+.price-tag:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+// Form validation
+document.querySelector('.needs-validation').addEventListener('submit', function(event) {
+  if (!this.checkValidity()) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  this.classList.add('was-validated');
+});
+
+// Set minimum date to today
+const dateInput = document.getElementById('schedule_date');
+const today = new Date();
+today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+dateInput.min = today.toISOString().slice(0, 16);
+</script>
+{% endblock %}

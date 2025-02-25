@@ -1,0 +1,99 @@
+{% extends "healthcare_app/base.html" %}
+{% block title %}Trending Health Articles{% endblock %}
+{% block content %}
+<div class="container my-5">
+    <!-- Search Bar -->
+    <div class="row mb-4">
+        <div class="col-lg-6 mx-auto">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0">
+                    <i class="bi bi-search text-muted"></i>
+                </span>
+                <input type="text" id="articleSearch" class="form-control border-start-0" placeholder="Search articles...">
+            </div>
+        </div>
+    </div>
+
+    <h2 class="display-6 text-center mb-4">Trending Health Articles</h2>
+    
+    {% if articles %}
+        <div class="row g-4" id="articleContainer">
+            {% for article in articles %}
+                <div class="col-md-6 col-lg-4 article-card">
+                    <div class="card h-100 border-0 shadow-sm hover-lift">
+                        <div class="card-body p-4">
+                            <h5 class="card-title h4 mb-3 fw-bold">{{ article.title }}</h5>
+                            {% if article.publishedAt %}
+                                <div class="mb-3 d-flex align-items-center text-muted">
+                                    <i class="bi bi-calendar3 me-2"></i>
+                                    <small>{{ article.publishedAt|date:"M d, Y H:i" }}</small>
+                                </div>
+                            {% endif %}
+                            {% if article.description %}
+                                <p class="card-text mb-4">{{ article.description|truncatewords:20 }}</p>
+                            {% endif %}
+                            {% if article.source and article.source.name %}
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <small class="text-muted">Source: {{ article.source.name }}</small>
+                                    <a href="{{ article.url }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                        Read More <i class="bi bi-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-journal-x display-1 text-muted mb-3"></i>
+            <p class="lead text-muted">No trending articles available at the moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.article-card .card-title {
+    color: #2c3e50;
+    line-height: 1.4;
+}
+
+.article-card .card-text {
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+#articleSearch:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+}
+</style>
+
+<script>
+document.getElementById('articleSearch').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const articles = document.getElementsByClassName('article-card');
+    
+    Array.from(articles).forEach(article => {
+        const title = article.querySelector('.card-title').textContent.toLowerCase();
+        const description = article.querySelector('.card-text')?.textContent.toLowerCase() || '';
+        
+        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+            article.style.display = '';
+        } else {
+            article.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

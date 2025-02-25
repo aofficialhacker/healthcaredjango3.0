@@ -1,0 +1,93 @@
+{% extends "healthcare_app/base.html" %}
+{% load widget_tweaks %}
+{% block title %}Doctor Registration{% endblock %}
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card border-0 shadow-lg animate__animated animate__fadeIn">
+        <div class="card-header bg-success text-white text-center border-bottom-0 py-4">
+          <i class="bi bi-hospital display-4 mb-3"></i>
+          <h2 class="mb-0" style="font-size: 2rem; font-weight:600;">Doctor Registration</h2>
+          <p class="text-white-50">Register as a doctor to manage appointments and connect with patients.</p>
+        </div>
+        <div class="card-body">
+          {% if form.errors %}
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                  {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+          <form method="post" novalidate class="needs-validation animate__animated animate__fadeIn">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+              {% render_field form.username class="form-control form-control-lg" placeholder="Enter your username" %}
+            </div>
+            <!-- New Name Field -->
+            <div class="mb-3">
+              <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+              {% render_field form.name class="form-control form-control-lg" placeholder="Enter your full name" %}
+            </div>
+
+            <div class="mb-3">
+              <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+              {% render_field form.email class="form-control form-control-lg" placeholder="Enter your email" %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.specialty.id_for_label }}" class="form-label">{{ form.specialty.label }}</label>
+              {% render_field form.specialty class="form-select form-select-lg" %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.bio.id_for_label }}" class="form-label">{{ form.bio.label }}</label>
+              {% render_field form.bio class="form-control form-control-lg" placeholder="Tell us about yourself" rows="4" %}
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.checkup_fee.id_for_label }}" class="form-label">{{ form.checkup_fee.label }}</label>
+              {% render_field form.checkup_fee class="form-control form-control-lg" placeholder="Enter your consultation fee in INR" %}
+            </div>
+            <div class="mb-3 form-check">
+              {% render_field form.is_lab_tester class="form-check-input" %}
+              <label for="{{ form.is_lab_tester.id_for_label }}" class="form-check-label">{{ form.is_lab_tester.label }}</label>
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.password1.id_for_label }}" class="form-label">{{ form.password1.label }}</label>
+              <div class="position-relative">
+                {% render_field form.password1 class="form-control form-control-lg" placeholder="Enter your password" %}
+                <span class="position-absolute top-50 end-0 translate-middle-y pe-3 toggle-password" style="cursor: pointer;">
+                  <i class="bi bi-eye"></i>
+                </span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="{{ form.password2.id_for_label }}" class="form-label">{{ form.password2.label }}</label>
+              <div class="position-relative">
+                {% render_field form.password2 class="form-control form-control-lg" placeholder="Confirm your password" %}
+                <span class="position-absolute top-50 end-0 translate-middle-y pe-3 toggle-password" style="cursor: pointer;">
+                  <i class="bi bi-eye"></i>
+                </span>
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-success btn-lg shadow-sm hover-scale">
+                <i class="bi bi-person-plus-fill me-2"></i>Register
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer text-center bg-white border-top-0 py-3">
+          <p class="mb-0">Already registered? <a href="{% url 'doctor_login' %}" class="text-success hover-underline">Doctor Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

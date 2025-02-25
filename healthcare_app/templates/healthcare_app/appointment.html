@@ -1,0 +1,190 @@
+{% extends "healthcare_app/base.html" %}
+{% load static %}
+{% block title %}Book an Appointment{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10 col-lg-8">
+      <!-- Progress Indicator -->
+      <div class="progress-wrapper mb-4">
+        <div class="d-flex justify-content-between position-relative mb-1">
+          <div class="progress-step active">
+            <div class="progress-marker"></div>
+            <div class="progress-text">Select Doctor</div>
+          </div>
+          <div class="progress-step active">
+            <div class="progress-marker"></div>
+            <div class="progress-text">Choose Date</div>
+          </div>
+          <div class="progress-step">
+            <div class="progress-marker"></div>
+            <div class="progress-text">Confirm</div>
+          </div>
+        </div>
+        <div class="progress" style="height: 2px;">
+          <div class="progress-bar bg-primary" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+
+      <!-- Card Container -->
+      <div class="card border-0 shadow-sm hover-shadow transition-all">
+        <div class="card-header bg-primary text-white d-flex align-items-center py-3">
+          <i class="bi bi-calendar-check fs-4 me-2"></i>
+          <h3 class="mb-0 fs-4">Book an Appointment</h3>
+        </div>
+        <div class="card-body p-4">
+          <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <!-- Row 1: Patient & Doctor -->
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  {{ form.patient }}
+                  <label for="{{ form.patient.id_for_label }}">
+                    <i class="bi bi-person-badge me-1"></i>
+                    {{ form.patient.label }}
+                  </label>
+                  {% if form.patient.help_text %}
+                    <div class="form-text">{{ form.patient.help_text }}</div>
+                  {% endif %}
+                  {% for error in form.patient.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-floating">
+                  {{ form.doctor }}
+                  <label for="{{ form.doctor.id_for_label }}">
+                    <i class="bi bi-stethoscope me-1"></i>
+                    {{ form.doctor.label }}
+                  </label>
+                  {% if form.doctor.help_text %}
+                    <div class="form-text">{{ form.doctor.help_text }}</div>
+                  {% endif %}
+                  {% for error in form.doctor.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Appointment Date -->
+            <div class="mt-4">
+              <div class="form-floating">
+                {{ form.appointment_date }}
+                <label for="{{ form.appointment_date.id_for_label }}">
+                  <i class="bi bi-clock me-1"></i>
+                  {{ form.appointment_date.label }}
+                </label>
+                {% if form.appointment_date.help_text %}
+                  <div class="form-text">{{ form.appointment_date.help_text }}</div>
+                {% endif %}
+                {% for error in form.appointment_date.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Row 3: Reason -->
+            <div class="mt-4">
+              <div class="form-floating">
+                {{ form.reason }}
+                <label for="{{ form.reason.id_for_label }}">
+                  <i class="bi bi-pencil-square me-1"></i>
+                  {{ form.reason.label }}
+                </label>
+                {% if form.reason.help_text %}
+                  <div class="form-text">{{ form.reason.help_text }}</div>
+                {% endif %}
+                {% for error in form.reason.errors %}
+                  <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-4 d-flex justify-content-between align-items-center">
+              <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left me-1"></i>
+                Back
+              </a>
+              <button type="submit" class="btn btn-success px-4 py-2">
+                <i class="bi bi-check-circle me-1"></i>
+                Confirm Appointment
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.progress-wrapper {
+  margin: 0 auto;
+}
+
+.progress-step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-marker {
+  width: 20px;
+  height: 20px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  transition: all 0.3s ease;
+}
+
+.progress-step.active .progress-marker {
+  background-color: var(--bs-primary);
+}
+
+.progress-text {
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+.progress-step.active .progress-text {
+  color: var(--bs-primary);
+  font-weight: 500;
+}
+
+.hover-shadow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-select {
+  height: calc(3.5rem + 2px);
+  line-height: 1.25;
+}
+
+.form-floating > label {
+  padding: 1rem 0.75rem;
+}
+
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  opacity: .65;
+  transform: scale(.85) translateY(-0.5rem) translateX(0.15rem);
+}
+</style>
+{% endblock %}

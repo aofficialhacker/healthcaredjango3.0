@@ -1,0 +1,231 @@
+{% extends "healthcare_app/base.html" %}
+{% load static %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+.hero-section {
+  min-height: 80vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{% static "healthcare_app/images/hero-bg.jpg" %}') center/cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  min-height: 80vh;
+  animation: fadeIn 1s ease-out;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.services .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.services .card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.services .card i {
+  transition: transform 0.3s ease;
+}
+
+.services .card:hover i {
+  transform: scale(1.1);
+}
+
+.testimonials {
+  background-color: #f8f9fa;
+}
+
+.testimonial {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 3rem;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.about-us img {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.about-us img:hover {
+  transform: scale(1.02);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+{% if user.is_authenticated and user.doctorprofile %}
+  <!-- Doctor Home Section -->
+  <div class="container my-5 animate__animated animate__fadeIn">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <h1 class="display-4">Welcome, Dr. {{ user.get_full_name|default:user.username }}</h1>
+        <p class="lead">Manage your appointments, review patient details, and stay updated with the latest healthcare news.</p>
+        <a href="{% url 'doctor_dashboard' %}" class="btn btn-lg btn-success">Go to Dashboard</a>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12 text-center">
+        <h2>Latest Healthcare News</h2>
+        <p>Stay informed with recent developments in the medical field.</p>
+        <a href="{% url 'external_health_articles' %}" class="btn btn-outline-primary">View Health Articles</a>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <!-- Patient/Anonymous Home Section -->
+  <!-- Hero Section -->
+  <div class="hero-section position-relative text-white text-center">
+    <div class="hero-overlay"></div>
+    <div class="hero-content container d-flex flex-column justify-content-center align-items-center">
+      <h1 class="display-3 fw-bold mb-4">bHealthy: Empowering a Healthier Tomorrow</h1>
+      <p class="lead mb-4">Compassionate care with cutting-edge medical solutions—because your health is our priority.</p>
+      <a href="{% url 'book_appointment' %}" class="btn btn-lg btn-primary px-5 py-3">Book an Appointment</a>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <section class="services py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 display-4">Our Services</h2>
+      <div class="row g-4">
+        <!-- Lab Test -->
+        <div class="col-md-4">
+          <a href="{% url 'lab_tests' %}" class="text-decoration-none">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body p-4">
+                <i class="bi bi-clipboard2-pulse display-4 text-primary mb-3"></i>
+                <h5 class="card-title h4">Lab Test</h5>
+                <p class="card-text text-muted">Explore a wide range of lab tests with transparent pricing and easy booking.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Buy Medicine -->
+        <div class="col-md-4">
+          <a href="{% url 'buy_medicine' %}" class="text-decoration-none">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body p-4">
+                <i class="bi bi-bag-check display-4 text-primary mb-3"></i>
+                <h5 class="card-title h4">Buy Medicine</h5>
+                <p class="card-text text-muted">Order your prescribed medicines online with secure payment and fast delivery.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Find Doctor -->
+        <div class="col-md-4">
+          <a href="{% url 'doctor_list' %}?genre=all" class="text-decoration-none">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body p-4">
+                <i class="bi bi-person-lines-fill display-4 text-primary mb-3"></i>
+                <h5 class="card-title h4">Find Doctor</h5>
+                <p class="card-text text-muted">Search for specialized doctors – Physician, Dietician, Dentist, Surgeon, Gynaecologist, and more.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Health Articles -->
+        <div class="col-md-4">
+          <a href="{% url 'external_health_articles' %}" class="text-decoration-none">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body p-4">
+                <i class="bi bi-newspaper display-4 text-primary mb-3"></i>
+                <h5 class="card-title h4">Health Articles</h5>
+                <p class="card-text text-muted">Read trending health articles and stay updated with the latest wellness tips.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- Order Details -->
+        <div class="col-md-4">
+          <a href="{% url 'order_details' %}" class="text-decoration-none">
+            <div class="card h-100 text-center shadow-sm">
+              <div class="card-body p-4">
+                <i class="bi bi-receipt display-4 text-primary mb-3"></i>
+                <h5 class="card-title h4">Order Details</h5>
+                <p class="card-text text-muted">Review your medicine orders with detailed pricing and delivery status.</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about-us py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6">
+          <img src="{% static 'healthcare_app/images/about-us.jpg' %}" class="img-fluid rounded" alt="About Us">
+        </div>
+        <div class="col-md-6">
+          <h2 class="display-4 mb-4">About Our Clinic</h2>
+          <p class="lead">Our experienced team is dedicated to providing you with the highest quality of healthcare. We combine compassion with advanced technology to ensure your well-being.</p>
+          <a href="{% url 'about' %}" class="btn btn-outline-primary btn-lg mt-3">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials py-5">
+    <div class="container">
+      <h2 class="text-center mb-5 display-4">What Our Patients Say</h2>
+      <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="testimonial text-center">
+              <p class="lead fw-normal">"The care I received was outstanding. Every visit made me feel safe and valued."</p>
+              <h5 class="mt-4 fw-bold">- Arjun Deshmukh</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="testimonial text-center">
+              <p class="lead fw-normal">"A truly patient-centric approach with state-of-the-art facilities."</p>
+              <h5 class="mt-4 fw-bold">- Bhavna Kapoor</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="testimonial text-center">
+              <p class="lead fw-normal">"I was very impressed with the prompt service and warm care. Highly recommended!"</p>
+              <h5 class="mt-4 fw-bold">- Rajesh Kumar</h5>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+{% endif %}
+{% endblock %}
